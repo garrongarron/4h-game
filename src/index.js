@@ -30,12 +30,15 @@ import weaponController from './controllers/WeaponController.js';
 import sphere from './basic/shapes/Sphere.js';
 import rayCasterController from './controllers/RaycasterController.js';
 import bullet from './basic/shapes/Bullet.js';
+import pointer from './UI/Pointer.js';
+import sky from './basic/shapes/Sky.js';
 
 scene.add(cube);
 scene.add(light);
 scene.add(plane);
 scene.add(sphere)
 scene.add(bullet)
+scene.add(sky)
 
 
 camera.position.set(2, 3, -4)
@@ -59,21 +62,17 @@ getSwatModel().then(model => {
     characterController.addController(cameraController)//#4.1
 
     rayCasterController.setCamera(camera)
+    rayCasterController.setCharacter(model)
     characterController.addController(rayCasterController)//#4.2
 
     weaponController.setWeapon(sphere)
     characterController.addController(weaponController)//#4.3
 
-
-    loopMachine.addCallback(() => {
-        camera.lookAt(model.position)
-    })
     characterController.addController(animationController)//#5
     characterController.start()
 })
 
 loopMachine.addCallback(() => {
-    if (keyListener.isPressed(keyCode.ENTER)) cube.rotation.y += .01
     renderer.render(scene, camera)
 });
 resize.start(renderer)
@@ -87,6 +86,6 @@ mouse.start()
 // sounds.play('background')
 sounds.setAsLoop('background')
 sounds.setVolume('background', .25)
-
+pointer.start()
 document.body.appendChild(mira)
 document.body.appendChild(info)

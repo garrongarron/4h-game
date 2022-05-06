@@ -19,8 +19,7 @@ class WeaponController {
     }
     tick() { 
         this.weapon.position.copy(this.rightHand.position)
-        this.rightArm.lookAt(0,1.5,0)
-        // console.log(this.state.target);
+        this.rightArm.lookAt(this.state.target)
     }
 }
 
