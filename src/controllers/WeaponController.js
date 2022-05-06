@@ -17,7 +17,7 @@ class WeaponController {
         this.rightHand = this.character.children[0].children[0].children[0].children[0].children[2].children[0].children[0].children[0]
         this.rightHand.attach(this.weapon)
 
-        document.addEventListener('mousedown',this.shot)
+        document.addEventListener('mousedown', this.shot)
     }
     shot = () =>{
         sounds.play('impact')

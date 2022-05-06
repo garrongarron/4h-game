@@ -89,20 +89,28 @@ getSwatModel().then(model => {
     })
 })
 
+scene.background = skyTexture;
 loopMachine.addCallback(() => {
     renderer.render(scene, camera)
 });
 resize.start(renderer)
-
-scene.background = skyTexture;
-
 loopMachine.start()
-keyListener.start()
-mouse.setCanvas(canvas)
-mouse.start()
-sounds.play('background')
-sounds.setAsLoop('background')
-sounds.setVolume('background', .25)
-pointer.start()
-document.body.appendChild(mira)
-document.body.appendChild(info)
+
+const init = () =>{
+    keyListener.start()
+    mouse.setCanvas(canvas)
+    mouse.start()
+    sounds.play('background')
+    sounds.setAsLoop('background')
+    sounds.setVolume('background', .25)
+    pointer.start()
+    document.body.appendChild(mira)
+    document.body.appendChild(info)
+}
+
+let flag = false
+document.addEventListener('click',()=>{
+    if(flag) return
+    flag = true
+    init()
+})

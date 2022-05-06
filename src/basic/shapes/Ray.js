@@ -6,4 +6,5 @@ const rayVisible = new THREE.Mesh( geometry, material );
 const ray = new THREE.Group();
 rayVisible.position.z += 50.3
 ray.add(rayVisible)
+ray.visible = false
 export default ray
