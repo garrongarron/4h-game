@@ -26,8 +26,8 @@ class RayCasterController {
         this.raycaster.setFromCamera(new THREE.Vector2(), this.camera);
         const intersects = this.raycaster.intersectObjects(this.array, true)[0];
         if (intersects) {
-            this.state.target.copy(intersects.point)
-            this.state.target.y -= .5
+            this.state.target.lerp(intersects.point, .5)
+            // this.state.target.y -= .5
         }
         sky.position.copy(this.character.position)
     }

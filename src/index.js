@@ -32,13 +32,19 @@ import rayCasterController from './controllers/RaycasterController.js';
 import bullet from './basic/shapes/Bullet.js';
 import pointer from './UI/Pointer.js';
 import sky from './basic/shapes/Sky.js';
+import gun from './models/gun/Gun.js';
+import ray from './basic/shapes/Ray.js';
 
 scene.add(cube);
 scene.add(light);
 scene.add(plane);
-scene.add(sphere)
-scene.add(bullet)
-scene.add(sky)
+scene.add(sphere);
+scene.add(bullet);
+scene.add(sky);
+
+scene.add(ray);
+
+
 
 
 camera.position.set(2, 3, -4)
@@ -65,11 +71,22 @@ getSwatModel().then(model => {
     rayCasterController.setCharacter(model)
     characterController.addController(rayCasterController)//#4.2
 
-    weaponController.setWeapon(sphere)
-    characterController.addController(weaponController)//#4.3
+    gun().then(model=>{
+        const group = new THREE.Group();
+        model.position.set(
+            model.position.x + .1,
+            model.position.y,
+            model.position.z - .1
+        )
+        model.rotation.x += Math.PI * .5
+        group.add(model)
+        scene.add(group)
+        weaponController.setWeapon(group)
+        characterController.addController(weaponController)//#4.3
 
-    characterController.addController(animationController)//#5
-    characterController.start()
+        characterController.addController(animationController)//#5
+        characterController.start()
+    })
 })
 
 loopMachine.addCallback(() => {
@@ -83,7 +100,7 @@ loopMachine.start()
 keyListener.start()
 mouse.setCanvas(canvas)
 mouse.start()
-// sounds.play('background')
+sounds.play('background')
 sounds.setAsLoop('background')
 sounds.setVolume('background', .25)
 pointer.start()
