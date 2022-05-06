@@ -64,7 +64,7 @@
 		}
 
 		parse( FBXBuffer, path ) {
-
+			console.log(FBXBuffer);
 			if ( isFbxFormatBinary( FBXBuffer ) ) {
 
 				fbxTree = new BinaryParser().parse( FBXBuffer );
@@ -72,7 +72,6 @@
 			} else {
 
 				const FBXText = convertArrayBufferToString( FBXBuffer );
-				console.log(FBXText);
 				if ( ! isFbxFormatASCII( FBXText ) ) {
 
 					throw new Error( 'THREE.FBXLoader: Unknown format.' );
