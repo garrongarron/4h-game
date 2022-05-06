@@ -25,6 +25,7 @@ import mouseController from './controllers/MouseController.js';
 import skyTexture from './images/SkyTexture.js';
 import sounds from '../sounds/Audios.js';
 import mira from './UI/Mira.js';
+import info from './UI/Info.js';
 
 scene.add( cube );
 scene.add( light );
@@ -69,8 +70,10 @@ keyListener.start()
 mouse.setCanvas(canvas)
 mouse.start()
 sounds.play('background')
-sounds.setAsLoop('setAsLoop')
+sounds.setAsLoop('background')
 sounds.setVolume('background', .25)
 
 document.body.appendChild(mira)
-console.log(/*scene, camera, renderer,*/ cube);
+document.body.appendChild(info)
+
+console.log(mira)
