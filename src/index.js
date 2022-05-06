@@ -75,5 +75,3 @@ sounds.setVolume('background', .25)
 
 document.body.appendChild(mira)
 document.body.appendChild(info)
-
-console.log(mira)
