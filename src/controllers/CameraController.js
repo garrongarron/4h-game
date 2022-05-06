@@ -3,7 +3,7 @@ import mouse from "../basic/Mouse.js"
 class CameraController {
     constructor() {
         this.character = null
-        this.radio = .75
+        this.radio = 1.75
         this.height = 1.5
         this.heightTarget = 1.2
         this.angle = 1
