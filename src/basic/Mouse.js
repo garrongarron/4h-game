@@ -11,6 +11,8 @@ class Mouse{
         this.canvas = canvas
     }
     start(){
+        this.delta = { x: 0, y: 0 }
+        this.acumulated = { x: 0, y: 0 }
         if (!this.canvas) alert("No canvas selected")
         this.canvas.requestPointerLock = this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock
         this.canvas.addEventListener('click', this.click)

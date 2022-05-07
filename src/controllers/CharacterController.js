@@ -33,6 +33,7 @@ class CharacterController {
             }
         });
         loopMachine.removeCallback(this.tick)
+        this.controller = {}
     }
 }
 

@@ -8,9 +8,10 @@ import renderer, { canvas } from "../basic/Renderer.js";
 import resize from "../basic/Resize.js";
 import scene from "../basic/Scene.js";
 import plane from "../basic/shapes/Plane.js";
-import ray from "../basic/shapes/Ray.js";
+import ray, {getRay} from "../basic/shapes/Ray.js";
 import sky from "../basic/shapes/Sky.js";
 import skyTexture from "../images/SkyTexture.js";
+import gun from "../models/gun/Gun.js";
 import getXbotModel from '../models/xbot/XbotTest.js'
 import info from "../UI/Info.js";
 import mira from "../UI/Mira.js";
@@ -23,19 +24,25 @@ class Scene1 {
         this.sceneHandler = sceneHandler
         scene.add(plane);
         scene.add(light);
+        getRay()
         scene.add(ray);
         scene.add(sky);
         scene.background = skyTexture;
         loopMachine.addCallback(this.render);
         loopMachine.start()
-        camera.position.set(2, 2, 2)
-        getXbotModel().then(model => {
-            scene.add(model)
-            this.model = model
-            customController.start(this.model)
-            camera.lookAt(model.position)
-            model.scale.set(.01, .01, .01)
+        // camera.position.set(2, 2, 2)
+        const promises = [gun(), getXbotModel()]
+        Promise.all(promises).then(promiseArray=>{
+            const gunModel = promiseArray[0]
+            gunModel.position.set(0,0,0)
+            gunModel.rotation.set(0,0,0)
+            this.model = promiseArray[1]
+            this.model.position.set(0,0,0)
+            this.model.rotation.set(0,0,0)
+            scene.add(this.model)
+            customController.start(this.model, gunModel)
         })
+        
         document.body.appendChild(nextBtn)
         nextBtn.addEventListener('click', this.next)
         mouse.setCanvas(canvas)
@@ -49,7 +56,7 @@ class Scene1 {
             if (this.background) return
             this.background = true
             sounds.setAsLoop('background')
-            sounds.play('background')
+            // sounds.play('background')
             sounds.setVolume('background', .25)
         })
     }

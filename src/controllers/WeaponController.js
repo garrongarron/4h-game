@@ -27,6 +27,7 @@ class WeaponController {
         // this.chest = this.character.children[0].children[0].children[0].children[0]
         // this.rightHand = this.character.children[0].children[0].children[0].children[0].children[2].children[0].children[0].children[0]
         this.rightHand.attach(this.weapon)
+        document.removeEventListener('mousedown', this.shot)
         document.addEventListener('mousedown', this.shot)
         sounds.setVolume('impact', .125)
     }
@@ -46,7 +47,7 @@ class WeaponController {
         this.weapon.position.copy(this.rightHand.position)
         this.weapon.position.y = 2+ mouse.acumulated.y / 150 
         this.chest.rotation.x = mouse.acumulated.y / 2000
-        info.innerText = this.weapon.position.y
+        info.innerText = this.chest.rotation.x
         if(mouse.delta.x ==0) this.weapon.lookAt(this.state.target)
         ray.lookAt(this.state.target)
     }
