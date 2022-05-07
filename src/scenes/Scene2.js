@@ -1,17 +1,19 @@
+import { canvas } from "../basic/Renderer.js";
+
 class Scene2 {
     
     open(sceneHandler) {
         this.sceneHandler = sceneHandler
         console.log('hola start()', this);
-        document.addEventListener('click', this.next)
+        canvas.addEventListener('click', this.next)
     }
     next = (e) =>{
-        this.sceneHandler.goTo('campo')
+        this.sceneHandler.goTo('settings')
         e.preventDefault()
         e.stopPropagation()
     }
     close(){     
-        document.removeEventListener('click', this.next)
+        canvas.removeEventListener('click', this.next)
         console.error('CLOSED Scene2');
     }
 }

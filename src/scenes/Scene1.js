@@ -8,7 +8,7 @@ import renderer, { canvas } from "../basic/Renderer.js";
 import resize from "../basic/Resize.js";
 import scene from "../basic/Scene.js";
 import plane from "../basic/shapes/Plane.js";
-import ray, {getRay} from "../basic/shapes/Ray.js";
+import ray, { getRay } from "../basic/shapes/Ray.js";
 import sky from "../basic/shapes/Sky.js";
 import skyTexture from "../images/SkyTexture.js";
 import gun from "../models/gun/Gun.js";
@@ -32,17 +32,17 @@ class Scene1 {
         loopMachine.start()
         // camera.position.set(2, 2, 2)
         const promises = [gun(), getXbotModel()]
-        Promise.all(promises).then(promiseArray=>{
+        Promise.all(promises).then(promiseArray => {
             const gunModel = promiseArray[0]
-            gunModel.position.set(0,0,0)
-            gunModel.rotation.set(0,0,0)
+            gunModel.position.set(0, 0, 0)
+            gunModel.rotation.set(0, 0, 0)
             this.model = promiseArray[1]
-            this.model.position.set(0,0,0)
-            this.model.rotation.set(0,0,0)
+            this.model.position.set(0, 0, 0)
+            this.model.rotation.set(0, 0, 0)
             scene.add(this.model)
             customController.start(this.model, gunModel)
         })
-        
+
         document.body.appendChild(nextBtn)
         nextBtn.addEventListener('click', this.next)
         mouse.setCanvas(canvas)

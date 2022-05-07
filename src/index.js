@@ -3,4 +3,4 @@ import sceneList from "./scenes/SceneList.js";
 
 const scenes = new SceneHandler(sceneList)
 
-scenes.goTo('campo')
+scenes.goTo('menu')

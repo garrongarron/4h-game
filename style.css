@@ -3,8 +3,12 @@
     margin: 0;
     box-sizing: border-box;
     overflow: hidden;
+    font-size: 30px;
+    font-family: sans-serif;
 }
-
+body{
+    background-color: #111;
+}
 /* *{
     margin: 0;
 }
@@ -46,4 +50,32 @@ body, canvas{
     background-color: red;
     color: white;
     padding: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+
+
+.settings{
+    max-width: 600px;
+    height: 80%;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    position: fixed;
+    z-index: 1;
+
+}
+.settings-sounds-background{
+    top: 0;
+    left: 0;
+    background-color: #111;
+    padding: 15px;
+    color: #666;
+}
+
+.settings-sounds-background input{
+    border: 1px solid red;
+    color: #666;
+    background-color: #111;
 }

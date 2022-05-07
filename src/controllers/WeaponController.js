@@ -31,6 +31,9 @@ class WeaponController {
         document.addEventListener('mousedown', this.shot)
         sounds.setVolume('impact', .125)
     }
+    stop = ()=>{
+        document.removeEventListener('mousedown', this.shot)
+    }
     
     shot = () =>{
         sounds.play('impact')
