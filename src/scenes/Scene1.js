@@ -1,3 +1,4 @@
+import sounds from "../../sounds/Audios.js";
 import camera from "../basic/Camera.js";
 import keyListener from "../basic/KeyListener.js";
 import light from "../basic/Light.js";
@@ -20,7 +21,6 @@ const cache = document.createElement('div')
 class Scene1 {
     open(sceneHandler) {
         this.sceneHandler = sceneHandler
-        console.log('hola start()', this);
         scene.add(plane);
         scene.add(light);
         scene.add(ray);
@@ -28,8 +28,8 @@ class Scene1 {
         scene.background = skyTexture;
         loopMachine.addCallback(this.render);
         loopMachine.start()
-        camera.position.set(2,2,2)
-        getXbotModel().then(model=>{
+        camera.position.set(2, 2, 2)
+        getXbotModel().then(model => {
             scene.add(model)
             this.model = model
             customController.start(this.model)
@@ -44,6 +44,14 @@ class Scene1 {
         resize.start(renderer)
         document.body.appendChild(mira)
         document.body.appendChild(info)
+        this.background = false
+        document.addEventListener('click', () => {
+            if (this.background) return
+            this.background = true
+            sounds.setAsLoop('background')
+            sounds.play('background')
+            sounds.setVolume('background', .25)
+        })
     }
     render = () => {
         renderer.render(scene, camera)
@@ -54,6 +62,8 @@ class Scene1 {
         e.stopPropagation()
     }
     close() {
+        this.background = false
+        sounds.stop('background')
         customController.stop()
         nextBtn.removeEventListener('click', this.next)
         mouse.stop()

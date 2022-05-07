@@ -1,6 +1,7 @@
 import camera from "../../basic/Camera.js"
 import light from "../../basic/Light.js"
 import scene from "../../basic/Scene.js"
+import ray from "../../basic/shapes/Ray.js"
 import { AnimationController } from "../../controllers/AnimationController.js"
 import { CameraController } from "../../controllers/CameraController.js"
 import { CharacterController } from "../../controllers/CharacterController.js"
@@ -27,8 +28,10 @@ class CustomController {
         this.rayCasterController = new RayCasterController()
         this.weaponController = new WeaponController()
         this.animationController = new AnimationController()
+        this.group = new THREE.Group();
     }
     start(model) {
+        this.model = model;
         this.characterController.addCharacter(model)
         this.characterController.addController(this.keyController)
         this.mouseController.setCamera(camera)
@@ -44,20 +47,26 @@ class CustomController {
         this.rayCasterController.setCharacter(model)
         this.characterController.addController(this.rayCasterController)
         gun().then(modelGun=>{
-            const group = new THREE.Group();
-            modelGun.position.set(
-                model.position.x + .1,
-                model.position.y,
-                model.position.z - .1
+            this.gun = modelGun
+            this.gun.position.set(0,0,0)
+            const size= 0.013
+            this.gun.scale.set(size, size, size);
+            this.gun.position.set(
+                model.position.x - .05,
+                model.position.y - .08,
+                model.position.z - .05
             )
-            modelGun.rotation.x += Math.PI * .5
-            group.add(modelGun)
-            scene.add(group)
-            this.weaponController.setWeapon(group)
+            // modelGun.position.copy(model.position)
+            this.gun.rotation.y += Math.PI * .5
+            this.group.add(this.gun)
+            ray.position.y +=.09
+            ray.position.z -=.2
+            this.group.add(ray)
+            scene.add(this.group)
+            this.weaponController.setWeapon(this.group)
             const chest = model.children[0].children[1].children[1].children[1]//.children[2]
-            console.log(chest);
             this.weaponController.setChest(chest)
-            const rightHand = model.children[0].children[1].children[1].children[1].children[3].children[1].children[1].children[1]
+            const rightHand = model.children[0].children[1].children[1].children[1].children[3].children[1].children[1].children[1].children[3]
             this.weaponController.setRightHand(rightHand)
             
             this.characterController.addController(this.weaponController)
@@ -67,7 +76,7 @@ class CustomController {
     }
 
     stop(){
-        scene.remove(group)
+        // scene.remove(this.group)
         this.characterController.stop()
     }
 }

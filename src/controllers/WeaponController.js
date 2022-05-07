@@ -1,6 +1,7 @@
 import sounds from "../../sounds/Audios.js"
+import mouse from "../basic/Mouse.js"
 import ray from "../basic/shapes/Ray.js"
-
+import info from "../UI/Info.js"
 class WeaponController {
     constructor() {
         this.state = null
@@ -27,29 +28,26 @@ class WeaponController {
         // this.rightHand = this.character.children[0].children[0].children[0].children[0].children[2].children[0].children[0].children[0]
         this.rightHand.attach(this.weapon)
         document.addEventListener('mousedown', this.shot)
+        sounds.setVolume('impact', .125)
     }
     
     shot = () =>{
         sounds.play('impact')
         ray.visible = true
         clearTimeout(this.n)
+        this.n = 0
         this.n = setTimeout(() => {
             ray.visible = false
+            this.n = 0
         }, 100);
     }
    
     tick() { 
         this.weapon.position.copy(this.rightHand.position)
-        this.chest.lookAt(
-            this.state.target.x,
-            this.state.target.y-.5,
-            this.state.target.z,
-        )
-
-        const spowningPoint = new THREE.Vector3()
-        this.rightHand.getWorldPosition(spowningPoint)
-        spowningPoint.y += .1
-        ray.position.copy(spowningPoint)
+        this.weapon.position.y = 2+ mouse.acumulated.y / 150 
+        this.chest.rotation.x = mouse.acumulated.y / 2000
+        info.innerText = this.weapon.position.y
+        if(mouse.delta.x ==0) this.weapon.lookAt(this.state.target)
         ray.lookAt(this.state.target)
     }
 }

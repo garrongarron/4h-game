@@ -1,7 +1,8 @@
 const loader = new THREE.GLTFLoader();
-
+let promise = null
 const gun = () =>{
-  return new Promise((res, rej) => {
+  if(promise) return promise
+  promise = new Promise((res, rej) => {
     loader.load("src/models/gun/scene.gltf",
       function (gltf) {
         const size= 0.013
@@ -23,6 +24,8 @@ const gun = () =>{
         rej();
       });
   });
+  
+  return promise
 }
 
 export default gun;
