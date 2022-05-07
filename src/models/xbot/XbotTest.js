@@ -11,8 +11,9 @@ for (const [key, value] of Object.entries(fileList)) {
 }
 
 const urlModel = folder + 'xbot.fbx'
-
+let model = null
 const getXbotModel = () => {
+    if(model) return model
     const animationLoader = new AnimationLoader(urlModel, urlAnimations)
     const promiseLoader = new PromiseLoader(THREE.FBXLoader, function (object) {
         const scale = .01
@@ -28,7 +29,8 @@ const getXbotModel = () => {
         return object
     })
     animationLoader.addPromiseLoader(promiseLoader)
-    return animationLoader.getModelWithAnimations() //promise
+    model = animationLoader.getModelWithAnimations()
+    return model //promise
 }
 
 export default getXbotModel
