@@ -1,20 +1,20 @@
-class ShadowController{
-    constructor(){
+class ShadowController {
+    constructor() {
         this.position = null
         this.directionalLight = null
         this.vector = null
     }
-    init(characterController){
+    init(characterController) {
         this.position = characterController.character.position
         this.directionalLight.target = characterController.character
     }
-    setDirectionalLight(directionalLight){
+    setDirectionalLight(directionalLight) {
         this.directionalLight = directionalLight
     }
-    setVector(vector){
+    setVector(vector) {
         this.vector = vector
     }
-    tick(){
+    tick() {
         this.directionalLight.position.copy(this.position.clone().add(this.vector))
     }
 }
@@ -22,3 +22,5 @@ class ShadowController{
 const shadowController = new ShadowController()
 
 export default shadowController
+
+export { ShadowController }

@@ -62,14 +62,15 @@ getSwatModel().then(model => {
     characterController.addController(moveController)//#2
     characterController.addController(rotationController)//#3
     shadowController.setDirectionalLight(light.children[0])
-    shadowController.setVector(new THREE.Vector3(0, 5, -5))
+    shadowController.setVector(new THREE.Vector3(0, 5, -5)) 
     characterController.addController(shadowController)//#4
     cameraController.setCamera(camera)
     characterController.addController(cameraController)//#4.1
-
     rayCasterController.setCamera(camera)
     rayCasterController.setCharacter(model)
     characterController.addController(rayCasterController)//#4.2
+
+
 
     gun().then(model=>{
         const group = new THREE.Group();

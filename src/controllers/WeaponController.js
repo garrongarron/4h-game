@@ -10,15 +10,25 @@ class WeaponController {
         this.rightHand =  null
         this.n = 0
     }
+    setWeapon(weapon){
+        this.weapon = weapon
+    }
+    setChest(chest){
+        this.chest = chest;
+    }
+    setRightHand(rightHand){
+        this.rightHand = rightHand;
+    }
+
     init(characterController) { 
         this.state = characterController.state
         this.character = characterController.character
-        this.rightArm = this.character.children[0].children[0].children[0].children[0]
-        this.rightHand = this.character.children[0].children[0].children[0].children[0].children[2].children[0].children[0].children[0]
+        // this.chest = this.character.children[0].children[0].children[0].children[0]
+        // this.rightHand = this.character.children[0].children[0].children[0].children[0].children[2].children[0].children[0].children[0]
         this.rightHand.attach(this.weapon)
-
         document.addEventListener('mousedown', this.shot)
     }
+    
     shot = () =>{
         sounds.play('impact')
         ray.visible = true
@@ -27,12 +37,10 @@ class WeaponController {
             ray.visible = false
         }, 100);
     }
-    setWeapon(weapon){
-        this.weapon = weapon
-    }
+   
     tick() { 
         this.weapon.position.copy(this.rightHand.position)
-        this.rightArm.lookAt(
+        this.chest.lookAt(
             this.state.target.x,
             this.state.target.y-.5,
             this.state.target.z,
@@ -49,3 +57,5 @@ class WeaponController {
 const weaponController = new WeaponController()
 
 export default weaponController
+
+export { WeaponController }

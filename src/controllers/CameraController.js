@@ -20,9 +20,9 @@ class CameraController {
         this.camera = camera
     }
     tick() {
-        
-        if(this.state.angle.y == 1) this.angle -= this.angleSensibility
-        if(this.state.angle.y == -1) this.angle += this.angleSensibility
+
+        if (this.state.angle.y == 1) this.angle -= this.angleSensibility
+        if (this.state.angle.y == -1) this.angle += this.angleSensibility
 
         const rotation = this.character.rotation
         const position = this.character.position.clone()
@@ -33,7 +33,7 @@ class CameraController {
         )
         this.camera.lookAt(
             position.x + Math.sin(rotation.y) * this.ahead,
-            position.y - mouse.acumulated.y /100,
+            position.y - mouse.acumulated.y / 100,
             position.z + Math.cos(rotation.y) * this.ahead
         )
         // console.log( Math.sin(rotation.y) * this.radio)
@@ -43,3 +43,5 @@ class CameraController {
 const cameraController = new CameraController()
 
 export default cameraController
+
+export { CameraController }

@@ -1,12 +1,20 @@
 import camera from "../basic/Camera.js";
+import keyListener from "../basic/KeyListener.js";
 import light from "../basic/Light.js";
 import loopMachine from "../basic/LoopMachine.js";
-import renderer from "../basic/Renderer.js";
+import mouse from "../basic/Mouse.js";
+import renderer, { canvas } from "../basic/Renderer.js";
+import resize from "../basic/Resize.js";
 import scene from "../basic/Scene.js";
 import plane from "../basic/shapes/Plane.js";
+import ray from "../basic/shapes/Ray.js";
+import sky from "../basic/shapes/Sky.js";
 import skyTexture from "../images/SkyTexture.js";
 import getXbotModel from '../models/xbot/XbotTest.js'
+import info from "../UI/Info.js";
+import mira from "../UI/Mira.js";
 import nextBtn from "../UI/NextScene.js";
+import customController from "./files-scene1/CustomController.js";
 
 const cache = document.createElement('div')
 class Scene1 {
@@ -15,6 +23,8 @@ class Scene1 {
         console.log('hola start()', this);
         scene.add(plane);
         scene.add(light);
+        scene.add(ray);
+        scene.add(sky);
         scene.background = skyTexture;
         loopMachine.addCallback(this.render);
         loopMachine.start()
@@ -22,11 +32,18 @@ class Scene1 {
         getXbotModel().then(model=>{
             scene.add(model)
             this.model = model
+            customController.start(this.model)
             camera.lookAt(model.position)
             model.scale.set(.01, .01, .01)
         })
         document.body.appendChild(nextBtn)
         nextBtn.addEventListener('click', this.next)
+        mouse.setCanvas(canvas)
+        mouse.start()
+        keyListener.start()
+        resize.start(renderer)
+        document.body.appendChild(mira)
+        document.body.appendChild(info)
     }
     render = () => {
         renderer.render(scene, camera)
@@ -37,11 +54,18 @@ class Scene1 {
         e.stopPropagation()
     }
     close() {
+        customController.stop()
         nextBtn.removeEventListener('click', this.next)
+        mouse.stop()
         cache.appendChild(nextBtn)
+        cache.appendChild(mira)
+        cache.appendChild(info)
         scene.remove(plane);
         scene.remove(light);
+        scene.remove(ray);
+        scene.remove(sky);
         scene.remove(this.model)
+        keyListener.stop()
         setTimeout(() => {
             loopMachine.removeCallback(this.render)
             loopMachine.stop()

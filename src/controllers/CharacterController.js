@@ -1,21 +1,21 @@
 import loopMachine from "../basic/LoopMachine.js"
 
-class CharacterController{
-    constructor(){
+class CharacterController {
+    constructor() {
         this.controller = {}
         this.character = null
         this.state = {}
     }
-    addController(controller){
+    addController(controller) {
         this.controller[controller.constructor.name] = controller
     }
-    removeController(){
+    removeController() {
         delete this.controller[controller.constructor.name]
     }
-    addCharacter(character){
+    addCharacter(character) {
         this.character = character
     }
-    start(){
+    start() {
         Object.keys(this.controller).forEach(key => {
             this.controller[key].init(this)
         });
@@ -26,11 +26,18 @@ class CharacterController{
             this.controller[key].tick()
         });
     }
-    stop(){
+    stop() {
+        Object.keys(this.controller).forEach(key => {
+            if(this.controller[key].hasOwnProperty('stop')){
+                this.controller[key].stop(this)
+            }
+        });
         loopMachine.removeCallback(this.tick)
     }
 }
 
-const characterController = new CharacterController
+const characterController = new CharacterController()
 
 export default characterController
+
+export { CharacterController }

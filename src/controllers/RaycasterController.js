@@ -36,3 +36,5 @@ class RayCasterController {
 const rayCasterController = new RayCasterController()
 
 export default rayCasterController
+
+export { RayCasterController }
